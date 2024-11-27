@@ -68,3 +68,43 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Librerie utilizzate
+
+### React-Bootstrap e Bootstrap
+Per una gestione semplice e veloce dell'aspetto della pagina
+- npm i react-bootstrap bootstrap
+
+
+### Axios
+Per effettuare chiamate HTTP al backend
+- npm install react-router-dom
+
+### React Icons
+Per aggiungere icone facilmente
+- npm install react-icons
+
+### React Toastify
+Per le notifiche
+- npm install react-toastify
+
+### Redux Toolkit
+Per la gestione dello stato globale
+- npm install @reduxjs/toolkit react-redux
+
+### Yup e Formik
+Per la validazione dei form
+- npm install formik yup
+
+### dotenv
+Per gestire variabili d'ambiente
+- npm install dotenv
+
+### Framer Motion
+Per animazioni
+- npm install framer-motion
+
+### Testing (Jest e React Testing Library)
+Per testare i componenti
+- npm install @testing-library/react @testing-library/jest-dom
+
