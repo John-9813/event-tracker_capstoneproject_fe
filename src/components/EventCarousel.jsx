@@ -12,7 +12,7 @@ const EventCarousel = ({ events }) => {
         <Carousel.Item key={event.id}>
           <img
             className="d-block w-100"
-            src="https://via.placeholder.com/500x500"
+            src="https://via.placeholder.com/400x200"
             alt={event.title}
           />
           <Carousel.Caption>
