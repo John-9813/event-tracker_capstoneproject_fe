@@ -92,6 +92,11 @@ Per le notifiche
 Per la gestione dello stato globale
 - npm install @reduxjs/toolkit react-redux
 
+### React Calendar
+Per gestire il calendario personale
+- npm install react-calendar
+
+
 ### Yup e Formik
 Per la validazione dei form
 - npm install formik yup
