@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import EventCarousel from "./EventCarousel";
-import EventList from "./EventList";
-import NewsSection from "./NewsSection";
-import EventFilterBar from "./EventFilterBar";
-import NewsFilterBar from "./NewsFilterBar";
+import EventCarousel from "../components/EventCarousel";
+import EventList from "../components/EventList";
+import NewsSection from "../components/NewsSection";
+import EventFilterBar from "../components/EventFilterBar";
+import NewsFilterBar from "../components/NewsFilterBar";
 
 const HomePage = ({ events, news, onSaveEvent, onSaveNews }) => {
   const [filteredEvents, setFilteredEvents] = useState(events);
@@ -35,8 +35,8 @@ const HomePage = ({ events, news, onSaveEvent, onSaveNews }) => {
 
   return (
     <Container>
-      <Row>
-        <Col>
+      <Row >
+        <Col className="justify-content-center d-flex">
           <EventCarousel events={filteredEvents} />
         </Col>
       </Row>

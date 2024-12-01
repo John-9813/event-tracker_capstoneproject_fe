@@ -7,7 +7,7 @@ const EventCarousel = ({ events }) => {
   }
 
   return (
-    <Carousel>
+    <Carousel className="w-75">
       {events.map(event => (
         <Carousel.Item key={event.id}>
           <img
