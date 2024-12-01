@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import { Container, Button, Modal, Form } from "react-bootstrap";
+import { addDays } from "date-fns";
 
 const CalendarPage = ({ savedEvents, onAddEvent, onRemoveEvent, onUpdateNote }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -50,6 +51,8 @@ const CalendarPage = ({ savedEvents, onAddEvent, onRemoveEvent, onUpdateNote }) 
             ? "highlight"
             : null
         }
+        showNeighboringMonth={false} // mostra solo i giorni del mese corrente
+        locale="en-US" // Forza il layout a iniziare con domenica
       />
       <div className="mt-4">
         <h4>Eventi per la data selezionata:</h4>

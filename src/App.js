@@ -101,7 +101,9 @@ const App = () => {
 
   return (
     <BrowserRouter>
-      <AppNavbar />
+  <div id="app-container">
+    <AppNavbar />
+    <main>
       <Routes>
         <Route
           path="/"
@@ -135,9 +137,12 @@ const App = () => {
           }
         />
       </Routes>
-      <ToastContainer />
-      <Footer />
-    </BrowserRouter>
+    </main>
+    <Footer />
+  </div>
+  <ToastContainer />
+</BrowserRouter>
+
   );
 };
 
