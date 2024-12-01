@@ -14,7 +14,10 @@ const NewsSection = ({ news, onSave }) => {
             <Card.Body>
               <Card.Title>{article.title}</Card.Title>
               <Card.Text>{article.description}</Card.Text>
-              <Button variant="primary" onClick={() => onSave(article)}>Salva</Button>
+              <Button
+                variant="outline-primary"
+                onClick={() => onSave({ ...article, type: "news" })}>Salva
+              </Button>
             </Card.Body>
           </Card>
         </Col>

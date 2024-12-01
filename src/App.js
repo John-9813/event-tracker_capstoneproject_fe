@@ -6,12 +6,16 @@ import HomePage from "./pages/HomePage";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import SavedItemsPage from "./pages/SavedItemsPage";
 import CalendarPage from "./pages/CalendarPage";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 
 const sampleEvents = [
-  { id: 1, title: "Evento 1", description: "Descrizione evento 1" },
-  { id: 2, title: "Evento 2", description: "Descrizione evento 2", },
+  { id: 1, title: "Concerto Rock", description: "Grande concerto rock", type: "Musica", city: "Milano", date: "2024-12-01" },
+  { id: 2, title: "Mostra d'arte", description: "Esposizione di opere d'arte", type: "Arte", city: "Roma", date: "2024-12-02" },
+  { id: 3, title: "Festival Food", description: "Cibi da tutto il mondo", type: "Cibo", city: "Milano", date: "2024-12-03" },
 ];
+
 
 const sampleNews = [
   { id: 1, title: "Notizia 1", description: "Breve descrizione notizia 1" },
@@ -19,6 +23,9 @@ const sampleNews = [
 ];
 
 
+const notify = (message, type = "success") => {
+  toast[type](message);
+};
 
 
 const App = () => {
@@ -27,15 +34,22 @@ const App = () => {
 
 // Funzione per salvare un elemento
 const handleSaveItem = (item) => {
-  // Evita duplicati
-  if (!savedItems.find((saved) => saved.id === item.id)) {
-    setSavedItems([...savedItems, item]);
+  if (!savedItems.find((saved) => saved.id === item.id && saved.type === item.type)) {
+    setSavedItems([...savedItems, { ...item, type: item.type || "news" }]);
+    notify(`${item.title} è stato salvato!`);
+  } else {
+    notify(`${item.title} è già tra gli elementi salvati.`, "warning");
   }
 };
 
+
 // Funzione per rimuovere un elemento salvato
 const handleRemoveItem = (id) => {
-  setSavedItems(savedItems.filter((item) => item.id !== id));
+  const item = savedItems.find((saved) => saved.id === id);
+  if (item) {
+    setSavedItems(savedItems.filter((saved) => saved.id !== id));
+    notify(`${item.title} è stato rimosso.`);
+  }
 };
 
   return (
@@ -52,7 +66,9 @@ const handleRemoveItem = (id) => {
         path="/calendar"
         element={<CalendarPage savedEvents={savedItems.filter((item) => item.type === "event")} />}/>
       </Routes>
-      <Footer />
+      <ToastContainer />
+      <Footer  />
+      
     </BrowserRouter>
   );
 };

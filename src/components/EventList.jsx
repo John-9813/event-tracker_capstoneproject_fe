@@ -10,8 +10,9 @@ const EventList = ({ events, onSave }) => (
           <Card.Body>
             <Card.Title>{event.title}</Card.Title>
             <Card.Text>{event.description}</Card.Text>
-            <Button variant="outline-primary" onClick={() => onSave(event)}>
-              Salva
+            <Button
+              variant="outline-primary"
+              onClick={() => onSave({ ...event, type: "event" })}>Salva
             </Button>
           </Card.Body>
         </Card>
