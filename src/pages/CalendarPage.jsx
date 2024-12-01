@@ -1,40 +1,135 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
-import { Container } from "react-bootstrap";
+import { Container, Button, Modal, Form } from "react-bootstrap";
 
-const CalendarPage = ({ savedEvents }) => {
+const CalendarPage = ({ savedEvents, onAddEvent, onRemoveEvent, onUpdateNote }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+  const [showModal, setShowModal] = useState(false);
+  const [newEvent, setNewEvent] = useState({ title: "", date: "" });
+  const [localNotes, setLocalNotes] = useState({});
 
   const getFormattedDate = (date) => {
     const offset = date.getTimezoneOffset();
     const adjustedDate = new Date(date.getTime() - offset * 60 * 1000);
     return adjustedDate.toISOString().split("T")[0];
   };
-  
+
   const eventsForDate = savedEvents.filter(
     (event) => event.date === getFormattedDate(selectedDate)
   );
-  
+
+  const handleRemoveEvent = (id) => {
+    onRemoveEvent(id);
+  };
+
+  const handleNoteChange = (id, note) => {
+    setLocalNotes((prevNotes) => ({
+      ...prevNotes,
+      [id]: note,
+    }));
+  };
+
+  const handleSaveNote = (id) => {
+    const note = localNotes[id];
+    if (note !== undefined) {
+      onUpdateNote(id, note);
+      delete localNotes[id];
+    }
+  };
 
   return (
     <Container className="my-5">
       <h2 className="text-center mb-4">Calendario Personale</h2>
-      <Calendar value={selectedDate} onChange={setSelectedDate} />
+      <Calendar
+        value={selectedDate}
+        onChange={setSelectedDate}
+        tileClassName={({ date }) =>
+          getFormattedDate(date) === getFormattedDate(selectedDate)
+            ? "selected-day"
+            : savedEvents.map((event) => event.date).includes(getFormattedDate(date))
+            ? "highlight"
+            : null
+        }
+      />
       <div className="mt-4">
         <h4>Eventi per la data selezionata:</h4>
         {eventsForDate.length > 0 ? (
           <ul>
             {eventsForDate.map((event) => (
-              <li key={event.id}>{event.title}</li>
+              <li key={event.id} className="mb-3">
+                {event.title}
+                <Form.Control
+                  as="textarea"
+                  rows={2}
+                  placeholder="Aggiungi una nota"
+                  value={localNotes[event.id] || event.note || ""}
+                  onChange={(e) => handleNoteChange(event.id, e.target.value)}
+                  className="mt-2"
+                />
+                <Button
+                  variant="primary"
+                  size="sm"
+                  className="mt-2"
+                  onClick={() => handleSaveNote(event.id)}
+                >
+                  Salva Nota
+                </Button>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  className="ms-2 mt-2"
+                  onClick={() => handleRemoveEvent(event.id)}
+                >
+                  Rimuovi
+                </Button>
+              </li>
             ))}
           </ul>
         ) : (
           <p>Nessun evento per questa data.</p>
         )}
+        <Button className="mt-4" onClick={() => setShowModal(true)}>
+          Aggiungi Evento
+        </Button>
       </div>
+      {/* Modale per aggiungere un evento */}
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+        <Modal.Header closeButton>
+          <Modal.Title>Aggiungi Evento</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form>
+            <Form.Group className="mb-3">
+              <Form.Label>Titolo Evento</Form.Label>
+              <Form.Control
+                type="text"
+                placeholder="Inserisci titolo"
+                value={newEvent.title}
+                onChange={(e) =>
+                  setNewEvent({ ...newEvent, title: e.target.value })
+                }
+              />
+            </Form.Group>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={() => setShowModal(false)}>
+            Chiudi
+          </Button>
+          <Button
+            variant="primary"
+            onClick={() => {
+              onAddEvent({ ...newEvent, date: getFormattedDate(selectedDate) });
+              setNewEvent({ title: "", date: "" });
+              setShowModal(false);
+            }}
+          >
+            Salva Evento
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Container>
   );
 };
 
 export default CalendarPage;
-
