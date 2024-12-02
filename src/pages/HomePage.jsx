@@ -1,14 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import EventCarousel from "../components/EventCarousel";
 import EventList from "../components/EventList";
 import NewsSection from "../components/NewsSection";
 import EventFilterBar from "../components/EventFilterBar";
 import NewsFilterBar from "../components/NewsFilterBar";
+import api from "../services/Api";
 
-const HomePage = ({ events, news, onSaveEvent, onSaveNews }) => {
-  const [filteredEvents, setFilteredEvents] = useState(events);
+const HomePage = ({ news, onSaveEvent, onSaveNews }) => {
+  const [events, setEvents] = useState([]);
+  const [filteredEvents, setFilteredEvents] = useState([]);
   const [filteredNews, setFilteredNews] = useState(news);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const response = await api.get("/events");
+        setEvents(response.data);
+      } catch (error) {
+        console.error("Errore durante il caricamento degli eventi", error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
 
   const handleEventFilter = (filterType, value) => {
     // Filtraggio dinamico degli eventi

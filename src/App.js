@@ -9,6 +9,7 @@ import SavedItemsPage from "./pages/SavedItemsPage";
 import CalendarPage from "./pages/CalendarPage";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import LoginPage from "./pages/LoginPage";
 
 const sampleEvents = [
   {
@@ -41,8 +42,8 @@ const sampleEvents = [
 ];
 
 const sampleNews = [
-  { id: 1, title: "Notizia 1", description: "Breve descrizione notizia 1" },
-  { id: 2, title: "Notizia 2", description: "Breve descrizione notizia 2" },
+  { id: 1, title: "Notizia 1", description: "Breve descrizione notizia 1", category: "Politica" },
+  { id: 2, title: "Notizia 2", description: "Breve descrizione notizia 2", category: "Cultura" },
 ];
 
 const notify = (message, type = "success") => {
@@ -105,6 +106,9 @@ const App = () => {
     <AppNavbar />
     <main>
       <Routes>
+      
+        <Route path="/login" element={<LoginPage />} /> 
+      
         <Route
           path="/"
           element={
