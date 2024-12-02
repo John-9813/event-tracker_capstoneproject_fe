@@ -97,6 +97,9 @@ Per la gestione dello stato globale
 Per gestire il calendario personale
 - npm install react-calendar
 
+### React Google Login
+Per permettere il login tramite account google
+- npm install @react-oauth/google
 
 ### Yup e Formik
 Per la validazione dei form
