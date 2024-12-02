@@ -78,6 +78,7 @@ Per una gestione semplice e veloce dell'aspetto della pagina
 
 ### Axios
 Per effettuare chiamate HTTP al backend
+- npm install axios
 - npm install react-router-dom
 
 ### React Icons
