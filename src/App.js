@@ -1,50 +1,15 @@
-import React, { useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 import AppNavbar from "./components/AppNavbar";
 import Footer from "./components/Footer";
 import HomePage from "./pages/HomePage";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import LoginPage from "./pages/LoginPage";
 import SavedItemsPage from "./pages/SavedItemsPage";
 import CalendarPage from "./pages/CalendarPage";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import LoginPage from "./pages/LoginPage";
-
-const sampleEvents = [
-  {
-    id: 1,
-    title: "Concerto Rock",
-    description: "Grande concerto rock",
-    type: "Musica",
-    city: "Milano",
-    date: "2024-12-01",
-    note: ""
-  },
-  {
-    id: 2,
-    title: "Mostra d'arte",
-    description: "Esposizione di opere d'arte",
-    type: "Arte",
-    city: "Roma",
-    date: "2024-12-02",
-    note: ""
-  },
-  {
-    id: 3,
-    title: "Festival Food",
-    description: "Cibi da tutto il mondo",
-    type: "Cibo",
-    city: "Milano",
-    date: "2024-12-03",
-    note: ""
-  },
-];
-
-const sampleNews = [
-  { id: 1, title: "Notizia 1", description: "Breve descrizione notizia 1", category: "Politica" },
-  { id: 2, title: "Notizia 2", description: "Breve descrizione notizia 2", category: "Cultura" },
-];
+import { useAuth } from "./hooks/useAuth";
+import "./App.css";
 
 const notify = (message, type = "success") => {
   toast[type](message);
@@ -52,6 +17,28 @@ const notify = (message, type = "success") => {
 
 const App = () => {
   const [savedItems, setSavedItems] = useState([]);
+  const [isAuthenticated, setIsAuthenticated] = useAuth();
+  const [loadingAuth, setLoadingAuth] = useState(true);
+
+  useEffect(() => {
+    const checkAuth = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        console.log("Token trovato in localStorage:", token);
+        setIsAuthenticated(true);
+      } else {
+        setIsAuthenticated(false);
+      }
+      setLoadingAuth(false); // Termina il caricamento dopo il controllo
+    };
+    checkAuth();
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+    notify("Logout effettuato con successo!", "info");
+  };
 
   // Funzione per salvare un elemento
   const handleSaveItem = (item) => {
@@ -93,60 +80,97 @@ const App = () => {
   const handleUpdateNote = (id, newNote) => {
     setSavedItems((prevItems) =>
       prevItems.map((item) =>
-        item.id === id ? { ...item, note: newNote } : item)
+        item.id === id ? { ...item, note: newNote } : item
+      )
     );
     toast.success("Nota aggiornata con successo!");
-
   };
-  
+
+  if (loadingAuth) {
+    // Mostra un caricamento mentre verifica l'autenticazione
+    return <div>Caricamento...</div>;
+  }
 
   return (
     <BrowserRouter>
-  <div id="app-container">
-    <AppNavbar />
-    <main>
-      <Routes>
-      
-        <Route path="/login" element={<LoginPage />} /> 
-      
-        <Route
-          path="/"
-          element={
-            <HomePage
-              events={sampleEvents}
-              news={sampleNews}
-              onSaveEvent={handleSaveItem}
-              onSaveNews={handleSaveItem}
+      <div id="app-container">
+        <AppNavbar isAuthenticated={isAuthenticated} onLogout={handleLogout} />
+        <main>
+          <Routes>
+            {/* Reindirizza alla home o alla login in base allo stato di autenticazione */}
+            <Route
+              path="/"
+              element={
+                isAuthenticated ? (
+                  <Navigate to="/home" />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
             />
-          }
-        />
-        <Route
-          path="/saved"
-          element={
-            <SavedItemsPage
-              savedItems={savedItems}
-              onRemove={handleRemoveItem}
+            <Route
+              path="/login"
+              element={
+                <LoginPage
+                  onLogin={() => {
+                    console.log(
+                      "onLogin chiamato, aggiornamento isAuthenticated."
+                    );
+                    setIsAuthenticated(true);
+                  }}
+                />
+              }
             />
-          }
-        />
-        <Route
-          path="/calendar"
-          element={
-            <CalendarPage
-              savedEvents={savedItems.filter((item) => item.type === "event")}
-              onAddEvent={handleAddEvent}
-              onRemoveEvent={handleRemoveEvent}
-              onUpdateNote={handleUpdateNote}
-            />
-          }
-        />
-      </Routes>
-    </main>
-    <Footer />
-  </div>
-  <ToastContainer />
-</BrowserRouter>
 
+            <Route
+              path="/home"
+              element={
+                isAuthenticated ? (
+                  <HomePage
+                    onSaveEvent={handleSaveItem}
+                    onSaveNews={handleSaveItem}
+                  />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/saved"
+              element={
+                isAuthenticated ? (
+                  <SavedItemsPage
+                    savedItems={savedItems}
+                    onRemove={handleRemoveItem}
+                  />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+            <Route
+              path="/calendar"
+              element={
+                isAuthenticated ? (
+                  <CalendarPage
+                    savedEvents={savedItems.filter(
+                      (item) => item.type === "event"
+                    )}
+                    onAddEvent={handleAddEvent}
+                    onRemoveEvent={handleRemoveEvent}
+                    onUpdateNote={handleUpdateNote}
+                  />
+                ) : (
+                  <Navigate to="/login" />
+                )
+              }
+            />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+      <ToastContainer />
+    </BrowserRouter>
   );
 };
 

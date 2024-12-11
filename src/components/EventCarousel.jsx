@@ -8,16 +8,22 @@ const EventCarousel = ({ events }) => {
 
   return (
     <Carousel className="w-75">
-      {events.map(event => (
+      {events.map((event) => (
         <Carousel.Item key={event.id}>
           <img
             className="d-block w-100"
-            src="https://via.placeholder.com/400x200"
-            alt={event.title}
+            src={event.imageUrl || "https://via.placeholder.com/400x200"}
+            alt={event.title || "Evento"}
           />
           <Carousel.Caption>
             <h3>{event.title}</h3>
-            <p>{event.description}</p>
+            <p>
+              <strong>Categoria:</strong> {event.category || "Non specificata"}
+              <br />
+              <strong>Data:</strong> {event.startDate || "Data non disponibile"}
+              <br />
+              <strong>Luogo:</strong> {event.location || "Luogo non disponibile"}
+            </p>
           </Carousel.Caption>
         </Carousel.Item>
       ))}
@@ -26,6 +32,7 @@ const EventCarousel = ({ events }) => {
 };
 
 export default EventCarousel;
+
 
 
 

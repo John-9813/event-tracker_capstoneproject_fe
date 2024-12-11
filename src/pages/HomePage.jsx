@@ -1,88 +1,120 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
 import EventCarousel from "../components/EventCarousel";
 import EventList from "../components/EventList";
 import NewsSection from "../components/NewsSection";
 import EventFilterBar from "../components/EventFilterBar";
 import NewsFilterBar from "../components/NewsFilterBar";
-import api from "../services/Api";
+import { fetchEventsFromBackend } from "../services/TicketmasterService";
+import { fetchNewsFromBackend } from "../services/NewsService";
 
-const HomePage = ({ news, onSaveEvent, onSaveNews }) => {
+const HomePage = ({ onSaveEvent, onSaveNews }) => {
   const [events, setEvents] = useState([]);
   const [filteredEvents, setFilteredEvents] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const [news, setNews] = useState([]);
   const [filteredNews, setFilteredNews] = useState(news);
+  const [newsLoading, setNewsLoading] = useState(true);
 
   useEffect(() => {
-    const fetchEvents = async () => {
+    const loadEvents = async () => {
+      setLoading(true);
       try {
-        const response = await api.get("/events");
-        setEvents(response.data);
+        const events = await fetchEventsFromBackend("IT", "", "event", "it-it");
+        setEvents(events);
+        setFilteredEvents(events);
       } catch (error) {
-        console.error("Errore durante il caricamento degli eventi", error);
+        console.error("Errore durante il caricamento degli eventi:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchEvents();
+    const loadNews = async () => {
+      setNewsLoading(true);
+      try {
+        const newsData = await fetchNewsFromBackend("news", "it", 10);
+        setNews(newsData);
+        setFilteredNews(newsData);
+      } catch (error) {
+        console.error("Errore durante il caricamento delle notizie:", error);
+      } finally {
+        setNewsLoading(false);
+      }
+    };
+
+    loadEvents();
+    loadNews();
   }, []);
 
-  const handleEventFilter = (filterType, value) => {
-    // Filtraggio dinamico degli eventi
-    setFilteredEvents(
-      events.filter((event) => {
-        if (filterType === "searchText") return event.title.toLowerCase().includes(value.toLowerCase());
-        if (filterType === "location") return event.city === value || value === "";
-        if (filterType === "category") return event.type === value || value === "";
-        return true;
-      })
-    );
+  const handleEventFilter = async (filterType, value) => {
+    if (["searchText", "category", "location"].includes(filterType)) {
+      try {
+        const events = await fetchEventsFromBackend("IT", "", value, "it-it");
+        setFilteredEvents(events);
+      } catch (error) {
+        console.error("Errore durante il filtraggio degli eventi:", error);
+      }
+    }
   };
 
-  const handleNewsFilter = (filterType, value) => {
-    // Filtraggio dinamico delle notizie
-    setFilteredNews(
-      news.filter((article) => {
-        if (filterType === "searchText") return article.title.toLowerCase().includes(value.toLowerCase());
-        if (filterType === "category") return article.category === value || value === "";
-        return true;
-      })
-    );
+  const handleNewsFilter = async (filterType, value) => {
+    if (filterType === "searchText") {
+      setFilteredNews(
+        news.filter((article) =>
+          article.title.toLowerCase().includes(value.toLowerCase())
+        )
+      );
+    }
   };
 
   return (
     <Container>
-      <Row >
-        <Col className="justify-content-center d-flex">
-          <EventCarousel events={filteredEvents} />
-        </Col>
-      </Row>
-
-      {/* Barra di filtraggio per gli eventi */}
-      <Row className="mt-4">
-        <Col>
-          <EventFilterBar onFilter={handleEventFilter} />
-        </Col>
-      </Row>
-
-      {/* Lista degli eventi */}
-      <Row className="mt-4">
+      {/* Sezione Eventi */}
+      <Row>
         <Col>
           <h2>Eventi</h2>
-          <EventList events={filteredEvents} onSave={onSaveEvent} />
+          {loading ? (
+            <div className="d-flex justify-content-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : filteredEvents.length > 0 ? (
+            <>
+              <EventCarousel events={filteredEvents} />
+              <Row className="mt-4">
+                <Col>
+                  <EventFilterBar onFilter={handleEventFilter} />
+                </Col>
+              </Row>
+              <Row className="mt-4">
+                <Col>
+                  <EventList events={filteredEvents} onSave={onSaveEvent} />
+                </Col>
+              </Row>
+            </>
+          ) : (
+            <Alert variant="info">Nessun evento disponibile.</Alert>
+          )}
         </Col>
       </Row>
 
-      {/* Barra di filtraggio per le notizie */}
-      <Row className="mt-4">
-        <Col>
-          <NewsFilterBar onFilter={handleNewsFilter} />
-        </Col>
-      </Row>
-
-      {/* Lista delle notizie */}
-      <Row className="mt-4">
+      {/* Sezione Notizie */}
+      <Row className="mt-5">
         <Col>
           <h2>Notizie</h2>
-          <NewsSection news={filteredNews} onSave={onSaveNews} />
+          {newsLoading ? (
+            <div className="d-flex justify-content-center">
+              <Spinner animation="border" variant="primary" />
+            </div>
+          ) : filteredNews.length > 0 ? (
+            <>
+              <NewsFilterBar onFilter={handleNewsFilter} />
+              <NewsSection news={filteredNews} onSave={onSaveNews} />
+            </>
+          ) : (
+            <Alert variant="info">Nessuna notizia disponibile.</Alert>
+          )}
         </Col>
       </Row>
     </Container>
@@ -90,7 +122,3 @@ const HomePage = ({ news, onSaveEvent, onSaveNews }) => {
 };
 
 export default HomePage;
-
-
-
-

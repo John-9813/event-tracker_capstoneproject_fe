@@ -6,6 +6,10 @@ const EventFilterBar = ({ onFilter }) => {
     onFilter(filterType, value);
   };
 
+const handleCityChange = (city) => {
+    onFilter("location", city);
+  };
+
   return (
     <Row className="align-items-center bg-light p-3 rounded mb-4 shadow-sm">
       {/* Input di ricerca libera */}
