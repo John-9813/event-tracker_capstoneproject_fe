@@ -32,11 +32,18 @@ footer {
   width: 100%;
 }
 
+.event-carousel-wrapper {
+  margin: 0 auto;
+  max-width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
 .react-calendar__month-view__weekdays {
   text-transform: capitalize;
   display: flex;
-  justify-content: space-between; /* Allinea i giorni correttamente */
+  justify-content: space-between;
 }
 
 .react-calendar__tile {
@@ -50,18 +57,17 @@ footer {
 }
 
 .react-calendar__tile--now {
-  background-color: #ffeb3b; /* Evidenzia il giorno corrente */
-  border-radius: 8px;
+  background-color: #ffeb3b;
 }
 
 .react-calendar__tile--active {
-  background-color: #37da05 !important; /* Giorno selezionato */
+  background-color: #37da05 !important;
   color: white !important;
   border: 2px solid #20ff02 !important;
 }
 
 .react-calendar__tile:hover {
-  background-color: #e0e0e0; /* Colore di hover */
+  background-color: #e0e0e0;
   cursor: pointer;
 }
 

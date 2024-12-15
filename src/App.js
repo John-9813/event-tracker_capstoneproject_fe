@@ -24,12 +24,11 @@ const App = () => {
     const checkAuth = async () => {
       const token = localStorage.getItem("token");
       if (token) {
-        console.log("Token trovato in localStorage:", token);
         setIsAuthenticated(true);
       } else {
         setIsAuthenticated(false);
       }
-      setLoadingAuth(false); // Termina il caricamento dopo il controllo
+      setLoadingAuth(false);
     };
     checkAuth();
   }, []);

@@ -1,14 +1,18 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
 
-const EventCarousel = ({ events }) => {
+const EventCarousel = ({ events }) => { 
+
+  const maxItems = 5;
+  const limitedEvents = events.slice(0, maxItems);
+
   if (!events || events.length === 0) {
     return <div>Nessun evento disponibile.</div>;
   }
 
   return (
     <Carousel className="w-75">
-      {events.map((event) => (
+      {limitedEvents.map((event) => (
         <Carousel.Item key={event.id}>
           <img
             className="d-block w-100"
