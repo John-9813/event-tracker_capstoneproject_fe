@@ -27,7 +27,7 @@ const HomePage = ({ onSaveEvent, onSaveNews }) => {
     const loadDefaultEvents = async () => {
       setLoadingEvents(true);
       try {
-        const events = await fetchEventsFromBackend("Milano", "IT", "it-it", currentPageEvents, 20);
+        const events = await fetchEventsFromBackend("Milano", "IT", "it-it", currentPageEvents, 18);
         console.log("Eventi di Milano caricati come default:", events);
         setEvents(events);
         setFilteredEvents(events);
@@ -46,7 +46,7 @@ const HomePage = ({ onSaveEvent, onSaveNews }) => {
     const loadNews = async () => {
       setLoadingNews(true);
       try {
-        const newsData = await fetchNewsFromBackend("news", "it", currentPageNews, 20);
+        const newsData = await fetchNewsFromBackend("news", "it", currentPageNews, 18);
         console.log(`Notizie caricate per pagina ${currentPageNews + 1}:`, newsData);
         setNews(newsData);
         setFilteredNews(newsData);
@@ -175,7 +175,7 @@ const HomePage = ({ onSaveEvent, onSaveNews }) => {
       {/* Sezione Notizie */}
       <Row className="mt-5">
         <Col>
-          <h2>Notizie</h2>
+          <h2 className="text-center">Notizie</h2>
           {loadingNews ? (
             <Spinner animation="border" variant="primary" />
           ) : (

@@ -47,7 +47,7 @@ const EventFilterBar = ({ onFilter }) => {
   };
 
   return (
-    <Form onSubmit={handleFilterChange} className="bg-light p-3 rounded mb-4 shadow-sm">
+    <Form onSubmit={handleFilterChange} className="bg-secondary p-3 rounded mb-4 shadow-sm">
       <Row className="align-items-center justify-content-around">
         <Col md={3}>
           <Form.Control
@@ -78,7 +78,7 @@ const EventFilterBar = ({ onFilter }) => {
           </Col>
           <Col md={3}>
           <Button
-            variant="secondary"
+            variant="outline-danger"
             className="w-75"
             onClick={resetFilters}
             disabled={loading}

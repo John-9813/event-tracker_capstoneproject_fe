@@ -1,51 +1,107 @@
+/* Stile generale per il calendario */
+.react-calendar {
+  background-color: #fffbe7; /* Giallo chiaro per lo sfondo */
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Navigazione superiore */
+.react-calendar__navigation {
+  margin-bottom: 1rem;
+}
+
+.react-calendar__navigation button {
+  background-color: #f3f4f6; /* Grigio chiaro */
+  border: none;
+  border-radius: 6px;
+  color: #333;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+}
+
+.react-calendar__navigation button:hover {
+  background-color: #3D5AFE; /* Colore primary */
+  color: #fff;
+  transform: scale(1.05);
+}
+
+/* Giorni della settimana */
 .react-calendar__month-view__weekdays {
-    text-transform: capitalize;
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .react-calendar__tile {
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 8px;
-    background-color: white;
-    color: black;
-  }
-  
-  .react-calendar__navigation{
-    margin-bottom: 1em;
-  }
+  text-transform: capitalize;
+  font-weight: bold;
+  color: #555;
+  background-color: #fffae6;
+  border-radius: 6px;
+  padding: 0.5rem;
+}
 
-  .react-calendar__navigation button {
-    background-color: #f0f0f0;
-    border: none;
-    border-radius: 4px;
-    padding: 8px 12px;
-    margin: 1px;
-    cursor: pointer;
-  }
+/* Stile per ogni giorno */
+.react-calendar__tile {
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #333;
+  transition: all 0.3s ease;
+}
 
-  .react-calendar__navigation button:hover {
-    background-color: #e0e0e0;
-  }
-  
-  .react-calendar__tile:hover {
-    background-color: #e0e0e0;
-    cursor: pointer;
-  }
+.react-calendar__tile:hover {
+  background-color: #f0f4ff;
+  cursor: pointer;
+  transform: scale(1.05);
+}
 
-  .highlight {
-    background-color: lightgreen !important;
-    border: 2px solid green;
-    color: white !important;
-    font-weight: bold;
-  }
-  
-  .selected-day {
-    background-color: yellow !important;
-    border: 2px solid orange;
-    color: white !important;
-    font-weight: bold;
-  }
+/* Giorni con eventi */
+.highlight {
+  background-color: #81C784 !important;
+  color: white !important;
+  border: 2px solid #66bb6a;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 128, 0, 0.2);
+}
+
+/* Giorno selezionato */
+.selected-day {
+  background-color: #f9de66 !important;
+  color: white !important;
+  border: 2px solid #e6af27;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(255, 215, 0, 0.5);
+  transform: scale(1.05);
+}
+
+/* Giorni disabilitati */
+.react-calendar__tile--disabled {
+  background-color: #f9f9f9;
+  color: #bbb;
+  cursor: not-allowed;
+}
+
+/* Personalizzazione bordi giorni */
+.react-calendar__tile--now {
+  border: 2px solid #3D5AFE; /* Colore primary */
+  font-weight: bold;
+  background-color: #e8eaf6; /* Blu chiaro */
+}
+
+/* Pulsante Aggiungi Evento */
+.button-add-event {
+  background-color: #3D5AFE;
+  color: white;
+  font-weight: bold;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.button-add-event:hover {
+  background-color: #2c47e5;
+  transform: scale(1.05);
+  cursor: pointer;
+}

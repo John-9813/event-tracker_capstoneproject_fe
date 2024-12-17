@@ -35,7 +35,7 @@ const AppNavbar = ({ isAuthenticated, onLogout }) => {
             )}
           </Nav>
           {isAuthenticated && (
-            <Button variant="outline-light" onClick={onLogout}>
+            <Button variant="outline-danger" onClick={onLogout}>
               Logout
             </Button>
           )}

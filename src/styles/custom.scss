@@ -7,6 +7,7 @@ $success: #81C784;
 $danger: #E57373;
 $warning: #FFF9C4;
 $dark: #212529;
+$secondary: #f5eeaf;
 
 // Colori aggiuntivi personalizzati
 $custom-yellow: #FFF9C4;
@@ -19,6 +20,7 @@ $theme-colors: (
   "danger": $danger,
   "warning": $warning,
   "dark": $dark,
+  "secondary": $secondary,
 );
 
 // Importa il resto di Bootstrap

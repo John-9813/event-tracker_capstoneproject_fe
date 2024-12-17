@@ -129,7 +129,7 @@ const CalendarPage = ({ savedEvents, onAddEvent, onRemoveEvent, onUpdateNote }) 
             Chiudi
           </Button>
           <Button
-            variant="primary"
+            variant="success"
             onClick={() => {
               onAddEvent({ ...newEvent, date: getFormattedDate(selectedDate) });
               setNewEvent({ title: "", date: "" });

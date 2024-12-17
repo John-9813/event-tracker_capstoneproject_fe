@@ -11,7 +11,7 @@ const NewsFilterBar = ({ onFilter }) => {
   };
 
   return (
-    <Row className="align-items-center bg-light p-3 rounded mb-4 shadow-sm">
+    <Row className="align-items-center justify-content-center bg-secondary p-3 rounded mb-4 shadow-sm">
       <Col md={6}>
         <Form.Control
           type="text"

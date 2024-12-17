@@ -79,13 +79,13 @@ const LoginPage = ({ onLogin }) => {
     <div className="login-page d-flex flex-column align-items-center justify-content-center">
       <div className="d-flex justify-content-center mb-3">
         <button
-          className={`btn btn-primary ${isLogin ? "active" : ""}`}
+          className={`btn btn-primary me-5 ${isLogin ? "active" : ""}`}
           onClick={() => setIsLogin(true)}
         >
           Login
         </button>
         <button
-          className={`btn btn-secondary ${!isLogin ? "active" : ""}`}
+          className={`btn btn-success ${!isLogin ? "active" : ""}`}
           onClick={() => setIsLogin(false)}
         >
           Registrati
@@ -117,7 +117,7 @@ const LoginPage = ({ onLogin }) => {
               />
               <button
                 type="button"
-                className="btn btn-outline-secondary"
+                className="btn btn_mostra"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? "Nascondi" : "Mostra"}
@@ -133,7 +133,7 @@ const LoginPage = ({ onLogin }) => {
             />
             <label className="form-check-label">Ricordami</label>
           </div>
-          <button type="submit" className="btn btn-success">
+          <button type="submit" className="btn btn-primary">
             Accedi
           </button>
         </form>
@@ -202,15 +202,13 @@ const LoginPage = ({ onLogin }) => {
               />
               <button
                 type="button"
-                className="btn btn-outline-secondary"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
               >
                 {showConfirmPassword ? "Nascondi" : "Mostra"}
               </button>
             </div>
           </div>
-
-          <button type="submit" className="btn btn-primary">
+          <button type="submit" className="btn btn-success">
             Registrati
           </button>
         </form>

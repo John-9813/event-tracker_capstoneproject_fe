@@ -38,7 +38,7 @@ const NewsSection = ({ news, onSave }) => {
                   Leggi di più
                 </Button>
                 <Button
-                  variant="outline-secondary"
+                  variant="outline-success"
                   onClick={() => onSave({ ...article, type: "news" })}
                 >
                   Salva

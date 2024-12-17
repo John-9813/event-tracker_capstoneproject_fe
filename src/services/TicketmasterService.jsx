@@ -30,7 +30,7 @@ const mapTicketStatus = (ticketStatus) => {
 
 
 
-const fetchEventsFromBackend = async (city = "", countryCode = "IT", locale = "it-it", page = 0, size = 20) => {
+const fetchEventsFromBackend = async (city = "", countryCode = "IT", locale = "it-it", page = 0, size = 18) => {
   const validLocale = locale.match(/^[a-zA-Z]{2}(-[a-zA-Z]{2})?$/) ? locale : "it-it";
 
   try {
@@ -56,7 +56,7 @@ const fetchEventsFromBackend = async (city = "", countryCode = "IT", locale = "i
   }
 };
 
-const fetchFilteredEvents = async ({ keyword = "", city = "", page = 0, size = 20 }) => {
+const fetchFilteredEvents = async ({ keyword = "", city = "", page = 0, size = 18 }) => {
   console.log("fetchFilteredEvents chiamata con filtri:", { keyword, city, page });
 
   try {
@@ -87,7 +87,5 @@ const fetchFilteredEvents = async ({ keyword = "", city = "", page = 0, size = 2
     return [];
   }
 };
-
-
 
 export { fetchEventsFromBackend, fetchFilteredEvents };

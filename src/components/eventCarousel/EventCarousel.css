@@ -5,3 +5,7 @@
     align-items: center;
     justify-content: center;
   }
+
+  .carousel-inner {
+    border-radius: 1em;
+  }

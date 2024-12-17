@@ -26,7 +26,7 @@ const EventCarousel = ({ events }) => {
               <p>
                 <strong>Città:</strong> {event.city || "Non specificata"} <br />
                 <strong>Data:</strong> {event.startDate || "Data non disponibile"} <br />
-                <strong>Luogo:</strong> {event.location || "Luogo non disponibile"}
+                <strong>Luogo:</strong> {event.venueName || "Luogo non disponibile"}
               </p>
             </Carousel.Caption>
           </Carousel.Item>
