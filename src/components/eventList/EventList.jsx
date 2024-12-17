@@ -1,6 +1,7 @@
 import React from "react";
 import { Row, Col } from "react-bootstrap";
-import EventCard from "./EventCard";
+import EventCard from "../eventCard/EventCard";
+import "./EventList.css";
 
 const EventList = ({ events, onSave }) => {
   console.log("Eventi ricevuti da EventList:", events);

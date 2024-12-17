@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import HttpService from "../services/HttpService";
+import HttpService from "../../services/HttpService";
+import "./LoginPage.css";
 
 const LoginPage = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);

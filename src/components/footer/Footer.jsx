@@ -1,4 +1,5 @@
 import React from "react";
+import "./Footer.css";
 
 const Footer = () => {
   return (
@@ -8,8 +9,8 @@ const Footer = () => {
         <a href="https://github.com/John-9813" target="_blank" rel="noopener noreferrer" className="text-white">
           GitHub
         </a> | 
-        <a href="https://www.linkedin.com/" target="_blank" rel="noopener noreferrer" className="text-white">
-          LinkedIn da aggiornare
+        <a href="https://www.linkedin.com/in/john-oliver-2205aa247/" target="_blank" rel="noopener noreferrer" className="text-white">
+          LinkedIn
         </a>
       </p>
     </footer>

@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Spinner, Alert, Button } from "react-bootstrap";
-import EventCarousel from "../components/EventCarousel";
-import EventList from "../components/EventList";
-import NewsSection from "../components/NewsSection";
-import EventFilterBar from "../components/EventFilterBar";
-import NewsFilterBar from "../components/NewsFilterBar";
-import {
-  fetchEventsFromBackend,
-  fetchFilteredEvents,
-} from "../services/TicketmasterService";
-import { fetchNewsFromBackend } from "../services/NewsService";
+import EventCarousel from "../../components/eventCarousel/EventCarousel";
+import EventList from "../../components/eventList/EventList";
+import NewsSection from "../../components/newsSection/NewsSection";
+import EventFilterBar from "../../components/eventFilterBar/EventFilterBar";
+import NewsFilterBar from "../../components/newsFilterBar/NewsFilterBar";
+
+import { fetchEventsFromBackend, fetchFilteredEvents } from "../../services/TicketmasterService";
+import { fetchNewsFromBackend } from "../../services/NewsService";
+
+import "./HomePage.css";
 
 const HomePage = ({ onSaveEvent, onSaveNews }) => {
   const [events, setEvents] = useState([]);

@@ -7,4 +7,3 @@ const formatDateToItalian = (dateString) => {
   };
 
   export { formatDateToItalian };
-  

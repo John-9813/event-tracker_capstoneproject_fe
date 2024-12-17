@@ -1,6 +1,8 @@
 import React from "react";
 import { Row, Col, Card, Button } from "react-bootstrap";
 
+import "./NewsSection.css";
+
 const NewsSection = ({ news, onSave }) => {
   if (!news || news.length === 0) {
     return <div>Nessuna notizia disponibile.</div>;

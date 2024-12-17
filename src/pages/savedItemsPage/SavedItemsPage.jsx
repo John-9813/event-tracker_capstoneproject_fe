@@ -1,6 +1,8 @@
 import React from "react";
 import { Container, Row, Col, Card, Button } from "react-bootstrap";
 
+import "./SavedItemsPage.css";
+
 const SavedItemsPage = ({ savedItems, onRemove }) => {
   const savedEvents = savedItems.filter((item) => item.type === "event");
   const savedNews = savedItems.filter((item) => item.type === "news");
@@ -30,14 +32,14 @@ const SavedItemsPage = ({ savedItems, onRemove }) => {
               </Card.Body>
               <Card.Footer className="d-flex justify-content-between">
                 <Button
-                  variant="primary"
+                  variant="outline-primary"
                   href={event.pageUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Info Acquisto
                 </Button>
-                <Button variant="danger" onClick={() => onRemove(event.id)}>
+                <Button variant="outline-danger" onClick={() => onRemove(event.id)}>
                   Rimuovi
                 </Button>
               </Card.Footer>
@@ -69,7 +71,7 @@ const SavedItemsPage = ({ savedItems, onRemove }) => {
                 >
                   Leggi di più
                 </Button>
-                <Button variant="danger" onClick={() => onRemove(news.id)}>
+                <Button variant="outline-danger" onClick={() => onRemove(news.id)}>
                   Rimuovi
                 </Button>
               </Card.Footer>

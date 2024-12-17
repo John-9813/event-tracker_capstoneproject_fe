@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
 
+import "./NewsFilterBar.css";
+
 const NewsFilterBar = ({ onFilter }) => {
   const [query, setQuery] = useState("");
 

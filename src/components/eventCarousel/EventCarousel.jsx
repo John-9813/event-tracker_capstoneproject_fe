@@ -1,9 +1,11 @@
 import React from "react";
 import { Carousel } from "react-bootstrap";
+import "./EventCarousel.css";
 
 const EventCarousel = ({ events }) => {
-  const maxItems = 5; // Limita il numero di elementi visualizzati nel carosello
+  const maxItems = 5;
   const limitedEvents = events.slice(0, maxItems);
+
 
   if (!events || events.length === 0) {
     return <div>Nessun evento disponibile.</div>;

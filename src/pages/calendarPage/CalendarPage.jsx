@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Calendar from "react-calendar";
 import { Container, Button, Modal, Form } from "react-bootstrap";
-import { addDays } from "date-fns";
+import "./CalendarPage.css";
 
 const CalendarPage = ({ savedEvents, onAddEvent, onRemoveEvent, onUpdateNote }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
@@ -18,7 +18,7 @@ const CalendarPage = ({ savedEvents, onAddEvent, onRemoveEvent, onUpdateNote }) 
   const eventsForDate = savedEvents.filter(
     (event) => event.date === getFormattedDate(selectedDate)
   );
-
+  
   const handleRemoveEvent = (id) => {
     onRemoveEvent(id);
   };
@@ -37,22 +37,31 @@ const CalendarPage = ({ savedEvents, onAddEvent, onRemoveEvent, onUpdateNote }) 
       delete localNotes[id];
     }
   };
-
+  console.log("Saved Events:", savedEvents);
+  console.log(
+    "Event Dates:",
+    savedEvents.map((e) => e.date)
+  );
+  console.log("Selected Date:", getFormattedDate(selectedDate));
+  
   return (
     <Container className="my-5">
       <h2 className="text-center mb-4">Calendario Personale</h2>
-      <Calendar
+      <Calendar className="text-center mb-3"
         value={selectedDate}
         onChange={setSelectedDate}
-        tileClassName={({ date }) =>
-          getFormattedDate(date) === getFormattedDate(selectedDate)
-            ? "selected-day"
-            : savedEvents.map((event) => event.date).includes(getFormattedDate(date))
-            ? "highlight"
-            : null
-        }
-        showNeighboringMonth={false} // mostra solo i giorni del mese corrente
-        locale="en-US" // Forza il layout a iniziare con domenica
+        tileClassName={({ date }) => {
+          const formattedDate = getFormattedDate(date);
+          if (formattedDate === getFormattedDate(selectedDate)) {
+            return "selected-day";
+          }
+          if (savedEvents.some((event) => event.date === formattedDate)) {
+            return "highlight";
+          }
+          return null;
+        }}     
+        showNeighboringMonth={false} 
+        locale="it-IT"
       />
       <div className="mt-4">
         <h4>Eventi per la data selezionata:</h4>

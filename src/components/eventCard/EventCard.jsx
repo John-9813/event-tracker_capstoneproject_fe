@@ -1,6 +1,8 @@
 import React from "react";
 import { Card, Button, Row, Col } from "react-bootstrap";
 
+import "./EventCard.css";
+
 const EventCard = ({ event, onSave }) => {
   return (
     <Card className="shadow-sm h-100 d-flex flex-column">
@@ -53,7 +55,7 @@ const EventCard = ({ event, onSave }) => {
           </Col>
           <Col xs="auto">
           <Button
-          variant="outline-secondary"
+          variant="outline-success"
           onClick={() => onSave({ ...event, type: "event" })}
         >
           Salva

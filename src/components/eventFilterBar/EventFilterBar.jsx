@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Row, Col, Form, Button } from "react-bootstrap";
-import { fetchFilteredEvents, fetchEventsFromBackend } from "../services/TicketmasterService";
+import { fetchFilteredEvents, fetchEventsFromBackend } from "../../services/TicketmasterService";
+import "./EventFilterBar.css";
 
 const EventFilterBar = ({ onFilter }) => {
   const [city, setCity] = useState("");
