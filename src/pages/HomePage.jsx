@@ -22,8 +22,8 @@ const HomePage = ({ onSaveEvent, onSaveNews }) => {
   const [loadingEvents, setLoadingEvents] = useState(true);
   const [loadingNews, setLoadingNews] = useState(true);
 
-  // Carica gli eventi in base alla pagina corrente
-  useEffect(() => {
+   // Carica eventi predefiniti (Milano) con paginazione
+   useEffect(() => {
     const loadDefaultEvents = async () => {
       setLoadingEvents(true);
       try {
@@ -37,12 +37,10 @@ const HomePage = ({ onSaveEvent, onSaveNews }) => {
         setLoadingEvents(false);
       }
     };
-  
+
     loadDefaultEvents();
   }, [currentPageEvents]);
   
-  
-
   // Carica le notizie in base alla pagina corrente
   useEffect(() => {
     const loadNews = async () => {
@@ -141,23 +139,27 @@ const HomePage = ({ onSaveEvent, onSaveNews }) => {
           <h2>Eventi</h2>
   
           {loadingEvents ? (
-            <Spinner animation="border" variant="primary" />
-          ) : (
-            <>
-              {/* Wrapper per allineare il carosello */}
-              <div className="event-carousel-wrapper d-flex justify-content-center align-items-center">
-                <EventCarousel events={filteredEvents} />
-              </div>
-              <Row className="mt-4 justify-content-center">
-                <Col xs={12} md={10}>
-                  <EventFilterBar onFilter={handleEventFilter} />
-                </Col>
-              </Row>
-              <Row className="mt-4">
-                <Col>
-                  <EventList events={filteredEvents} onSave={onSaveEvent} />
-                </Col>
-              </Row>
+        <Spinner animation="border" variant="primary" />
+      ) : (
+        <>
+          {/* Carosello centrato */}
+          <div className="event-carousel-wrapper d-flex justify-content-center align-items-center">
+            <EventCarousel events={filteredEvents} />
+          </div>
+
+          {/* Barra filtro */}
+          <Row className="mt-4 justify-content-center">
+            <Col xs={12} md={10}>
+              <EventFilterBar onFilter={handleEventFilter} />
+            </Col>
+          </Row>
+
+          {/* Lista eventi */}
+          <Row className="mt-4">
+            <Col>
+              <EventList events={filteredEvents} onSave={onSaveEvent} />
+            </Col>
+          </Row>
               <div className="pagination-controls mt-3 d-flex justify-content-center">
                 <Button onClick={handlePreviousPageEvents} disabled={currentPageEvents === 0}>
                   Precedente

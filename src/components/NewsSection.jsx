@@ -10,32 +10,38 @@ const NewsSection = ({ news, onSave }) => {
     <Row>
       {news.map((article) => (
         <Col key={article.id} md={4} className="mb-4">
-          <Card className="shadow-sm">
+          <Card className="h-100 d-flex flex-column shadow-sm">
             <Card.Img
               variant="top"
               src={article.imageUrl || "https://via.placeholder.com/400x200"}
               alt={article.title || "Immagine notizia"}
             />
-            <Card.Body>
-              <Card.Title>{article.title}</Card.Title>
-              <Card.Text>{article.description || "Descrizione non disponibile"}</Card.Text>
-              <Card.Text><small>{article.publishedDate}</small></Card.Text>
-              <Card.Text><strong>{article.source}</strong></Card.Text>
-              <Button
-                variant="outline-primary"
-                href={article.url}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Leggi di più
-              </Button>
-              <Button
-                variant="outline-secondary"
-                className="ms-2"
-                onClick={() => onSave({ ...article, type: "news" })}
-              >
-                Salva
-              </Button>
+            <Card.Body className="d-flex flex-column justify-content-between">
+              <div>
+                <Card.Title>{article.title}</Card.Title>
+                <Card.Text>
+                  <small>{article.publishedDate}</small>
+                </Card.Text>
+                <Card.Text>
+                  <strong>{article.source}</strong>
+                </Card.Text>
+              </div>
+              <div className="d-flex justify-content-between mt-2">
+                <Button
+                  variant="outline-primary"
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Leggi di più
+                </Button>
+                <Button
+                  variant="outline-secondary"
+                  onClick={() => onSave({ ...article, type: "news" })}
+                >
+                  Salva
+                </Button>
+              </div>
             </Card.Body>
           </Card>
         </Col>
