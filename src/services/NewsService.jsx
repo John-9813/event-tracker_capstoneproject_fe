@@ -1,10 +1,10 @@
 import axios from "axios";
 
 // Funzione per recuperare le news dal backend
-const fetchNewsFromBackend = async (query = "news", language = "it") => {
+const fetchNewsFromBackend = async (query = "news", language = "it", page = 1, size = 20) => {
   try {
     const response = await axios.get(`http://localhost:8080/news/external`, {
-      params: { query, language },
+      params: { query, language, page: page < 1 ? 1 : page, pageSize: size },
     });
     return response.data.map((news) => ({
       id: news.newsId,

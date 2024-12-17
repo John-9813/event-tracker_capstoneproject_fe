@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Container, Row, Col, Spinner, Alert } from "react-bootstrap";
+import { Container, Row, Col, Spinner, Alert, Button } from "react-bootstrap";
 import EventCarousel from "../components/EventCarousel";
 import EventList from "../components/EventList";
 import NewsSection from "../components/NewsSection";
@@ -13,82 +13,85 @@ import { fetchNewsFromBackend } from "../services/NewsService";
 
 const HomePage = ({ onSaveEvent, onSaveNews }) => {
   const [events, setEvents] = useState([]);
-  const [filteredEvents, setFilteredEvents] = useState([]);
-  const [loading, setLoading] = useState(true);
-
   const [news, setNews] = useState([]);
-  const [filteredNews, setFilteredNews] = useState(news);
-  const [newsLoading, setNewsLoading] = useState(true);
+  const [filteredEvents, setFilteredEvents] = useState([]);
+  const [filteredNews, setFilteredNews] = useState([]);
 
+  const [currentPageEvents, setCurrentPageEvents] = useState(0);
+  const [currentPageNews, setCurrentPageNews] = useState(0);
+  const [loadingEvents, setLoadingEvents] = useState(true);
+  const [loadingNews, setLoadingNews] = useState(true);
+
+  // Carica gli eventi in base alla pagina corrente
   useEffect(() => {
-    const loadEvents = async () => {
-      console.log("Eventi caricati inizialmente:", events);
-
-      setLoading(true);
+    const loadDefaultEvents = async () => {
+      setLoadingEvents(true);
       try {
-        const events = await fetchEventsFromBackend();
-        console.log("Eventi iniziali caricati:", events);
+        const events = await fetchEventsFromBackend("Milano", "IT", "it-it", currentPageEvents, 20);
+        console.log("Eventi di Milano caricati come default:", events);
         setEvents(events);
-        if (filteredEvents.length === 0) {
-          setFilteredEvents(events);
-        }
+        setFilteredEvents(events);
       } catch (error) {
-        console.error("Errore durante il caricamento degli eventi:", error);
+        console.error("Errore durante il caricamento degli eventi di default:", error);
       } finally {
-        setLoading(false);
+        setLoadingEvents(false);
       }
     };
+  
+    loadDefaultEvents();
+  }, [currentPageEvents]);
+  
+  
 
+  // Carica le notizie in base alla pagina corrente
+  useEffect(() => {
     const loadNews = async () => {
-      setNewsLoading(true);
+      setLoadingNews(true);
       try {
-        const newsData = await fetchNewsFromBackend("news", "it", 10);
+        const newsData = await fetchNewsFromBackend("news", "it", currentPageNews, 20);
+        console.log(`Notizie caricate per pagina ${currentPageNews + 1}:`, newsData);
         setNews(newsData);
         setFilteredNews(newsData);
       } catch (error) {
         console.error("Errore durante il caricamento delle notizie:", error);
       } finally {
-        setNewsLoading(false);
+        setLoadingNews(false);
       }
     };
 
-    loadEvents();
     loadNews();
-  }, []);
+  }, [currentPageNews]);
 
+  // Gestione dei filtri per gli eventi
   const handleEventFilter = async (filters) => {
-    console.log('Filtri selezionati:', filters);
-    setLoading(true);
+    console.log("Filtri selezionati in HomePage:", filters);
+  
+    setLoadingEvents(true);
     try {
-      const filteredEvents = await fetchFilteredEvents(filters);
+      const normalizedFilters = {
+        keyword: filters.keyword?.trim() || "",
+        city: filters.city?.trim() || "",
+      };
+  
+      console.log("Filtri normalizzati per il backend:", normalizedFilters);
+  
+      const filteredEvents = await fetchFilteredEvents(normalizedFilters);
+  
       if (filteredEvents.length === 0) {
-        console.warn('Nessun evento trovato per i filtri selezionati.');
+        console.warn("Nessun evento trovato per i filtri selezionati. Mantengo gli eventi attuali.");
       } else {
-        console.log('Eventi filtrati ricevuti:', filteredEvents);
-        // Posiziona l'evento corrispondente ai filtri come primo nella lista
-        const keyword = filters.keyword?.toLowerCase() || '';
-        const city = filters.city?.toLowerCase() || '';
-        const category = filters.category?.toLowerCase() || '';
-        const eventIndex = filteredEvents.findIndex(
-          (event) =>
-            event.title.toLowerCase().includes(keyword) &&
-            event.location.toLowerCase().includes(city) &&
-            event.category.toLowerCase().includes(category)
-        );
-        if (eventIndex > -1) {
-          const [matchedEvent] = filteredEvents.splice(eventIndex, 1);
-          filteredEvents.unshift(matchedEvent);
-        }
+        console.log("Eventi filtrati ricevuti dal backend:", filteredEvents);
+        setFilteredEvents(filteredEvents);
       }
-      setFilteredEvents(filteredEvents);
     } catch (error) {
-      console.error('Errore durante il filtraggio degli eventi:', error);
+      console.error("Errore durante il filtraggio degli eventi:", error);
     } finally {
-      setLoading(false);
+      setLoadingEvents(false);
     }
   };
   
-  const handleNewsFilter = async (filterType, value) => {
+  // Gestione dei filtri per le notizie
+  const handleNewsFilter = (filterType, value) => {
     if (filterType === "searchText") {
       setFilteredNews(
         news.filter((article) =>
@@ -98,31 +101,51 @@ const HomePage = ({ onSaveEvent, onSaveNews }) => {
     }
   };
 
+  // Navigazione pagine eventi
+  const handleNextPageEvents = async () => {
+    const nextPage = currentPageEvents + 1;
+    setCurrentPageEvents(nextPage);
+  
+    const filteredEvents = await fetchFilteredEvents({
+      city: "Milano",
+      page: nextPage,
+      size: 20,
+    });
+    setFilteredEvents(filteredEvents);
+  };
+  
+  const handlePreviousPageEvents = async () => {
+    if (currentPageEvents === 0) return;
+  
+    const prevPage = currentPageEvents - 1;
+    setCurrentPageEvents(prevPage);
+  
+    const filteredEvents = await fetchFilteredEvents({
+      city: "Milano",
+      page: prevPage,
+      size: 20,
+    });
+    setFilteredEvents(filteredEvents);
+  };
+  
+
+  // Navigazione pagine notizie
+  const handleNextPageNews = () => setCurrentPageNews((prev) => prev + 1);
+  const handlePreviousPageNews = () => setCurrentPageNews((prev) => Math.max(prev - 1, 0));
+
   return (
     <Container>
       {/* Sezione Eventi */}
       <Row className="d-flex justify-content-center align-items-center flex-column">
         <Col xs={12} className="text-center">
           <h2>Eventi</h2>
-
-          {/* Spinner durante il caricamento */}
-          {loading && (
-            <div className="d-flex justify-content-center">
-              <Spinner animation="border" variant="primary" />
-            </div>
-          )}
-
-          {/* Messaggio di warning se non ci sono eventi */}
-          {!loading && filteredEvents.length === 0 && (
-            <Alert variant="warning">
-              Nessun evento trovato per i filtri selezionati.
-            </Alert>
-          )}
-
-          {/* Contenuto principale degli eventi */}
-          {!loading && filteredEvents.length > 0 && (
+  
+          {loadingEvents ? (
+            <Spinner animation="border" variant="primary" />
+          ) : (
             <>
-              <div className="event-carousel-wrapper">
+              {/* Wrapper per allineare il carosello */}
+              <div className="event-carousel-wrapper d-flex justify-content-center align-items-center">
                 <EventCarousel events={filteredEvents} />
               </div>
               <Row className="mt-4 justify-content-center">
@@ -135,31 +158,43 @@ const HomePage = ({ onSaveEvent, onSaveNews }) => {
                   <EventList events={filteredEvents} onSave={onSaveEvent} />
                 </Col>
               </Row>
+              <div className="pagination-controls mt-3 d-flex justify-content-center">
+                <Button onClick={handlePreviousPageEvents} disabled={currentPageEvents === 0}>
+                  Precedente
+                </Button>
+                <span className="mx-3">Pagina {currentPageEvents + 1}</span>
+                <Button onClick={handleNextPageEvents}>Successiva</Button>
+              </div>
             </>
           )}
         </Col>
       </Row>
-
+  
       {/* Sezione Notizie */}
       <Row className="mt-5">
         <Col>
           <h2>Notizie</h2>
-          {newsLoading ? (
-            <div className="d-flex justify-content-center">
-              <Spinner animation="border" variant="primary" />
-            </div>
-          ) : filteredNews.length > 0 ? (
+          {loadingNews ? (
+            <Spinner animation="border" variant="primary" />
+          ) : (
             <>
               <NewsFilterBar onFilter={handleNewsFilter} />
               <NewsSection news={filteredNews} onSave={onSaveNews} />
+              <div className="pagination-controls mt-3 d-flex justify-content-center">
+                <Button onClick={handlePreviousPageNews} disabled={currentPageNews === 0}>
+                  Precedente
+                </Button>
+                <span className="mx-3">Pagina {currentPageNews + 1}</span>
+                <Button onClick={handleNextPageNews}>Successiva</Button>
+              </div>
             </>
-          ) : (
-            <Alert variant="info">Nessuna notizia disponibile.</Alert>
           )}
         </Col>
       </Row>
     </Container>
   );
+  
 };
 
 export default HomePage;
+

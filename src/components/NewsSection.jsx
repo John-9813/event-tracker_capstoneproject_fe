@@ -45,6 +45,3 @@ const NewsSection = ({ news, onSave }) => {
 };
 
 export default NewsSection;
-
-
-  
