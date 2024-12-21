@@ -59,22 +59,39 @@ Gli eventi salvati sono visualizzati in un calendario con indicazioni visive sul
 ## 📄 Struttura dei Componenti
 
 src
+
 │-- components
+
 |   ├── navbar |- file jsx e css # Navbar dell'app
+
 |   ├── footer |- file jsx e css # Footer
+
 |   ├── eventCard |- file jsx e css # Card singola per gli eventi
+
 |   ├── eventFilterBar |- file jsx e css # Barra dei filtri per eventi
+
 |   ├── eventList |- file jsx e css # Lista degli eventi
+
 |   ├── newsSection |- file jsx e css # Sezione per le notizie
+
 |   ├── calendarPage |- file jsx e css # Calendario personalizzato
+
 │-- pages
+
 |   ├── homePage |- file jsx e css # Pagina principale
+
 |   ├── savedItemsPage |- file jsx e css # Pagina degli elementi salvati
+
 |   ├── loginPage |- file jsx e css # Pagina di login
+
 │-- services
+
 |   ├── TicketmasterService.js # Chiamate API per eventi
+
 |   ├── NewsService.js # Chiamate API per notizie
+
 │-- styles
+
 |   ├── custom.scss # Stili personalizzati
 
 ## 🔄 Workflow
@@ -91,19 +108,28 @@ Funzioni principali come handleSaveItem e handleRemoveItem per gestire gli eleme
 Gli stili sono personalizzati con Sass.
 
 Esempio di palette personalizzata utilizzata:
-
 $primary: #3D5AFE;
+
 $success: #81C784;
+
 $danger: #E57373;
+
 $warning: #FFF9C4;
+
 $dark: #212529;
 
 $theme-colors: (
+
 "primary": $primary,
+
 "success": $success, 
+
 "danger": $danger,
+
 "warning": $warning,
+
 "dark": $dark,
+
 );
 
 ## 🧪 Test dell'Applicazione
