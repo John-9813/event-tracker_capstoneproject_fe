@@ -57,24 +57,41 @@ Gli eventi salvati sono visualizzati in un calendario con indicazioni visive sul
 È possibile aggiungere eventi personali con note direttamente nel calendario.
 
 ## 📄 Struttura dei Componenti
+
 src
 │-- components
-|   ├── navbar |- file jsx e css         # Navbar dell'app
-|   ├── footer |- file jsx e css        # Footer
-|   ├── eventCard |- file jsx e css     # Card singola per gli eventi
-|   ├── eventFilterBar |- file jsx e css  # Barra dei filtri per eventi
-|   ├── eventList |- file jsx e css      # Lista degli eventi
-|   ├── newsSection |- file jsx e css   # Sezione per le notizie
-|   ├── calendarPage |- file jsx e css   # Calendario personalizzato
+
+|   ├── navbar |- file jsx e css # Navbar dell'app
+
+|   ├── footer |- file jsx e css # Footer
+
+|   ├── eventCard |- file jsx e css # Card singola per gli eventi
+
+|   ├── eventFilterBar |- file jsx e css # Barra dei filtri per eventi
+
+|   ├── eventList |- file jsx e css # Lista degli eventi
+
+|   ├── newsSection |- file jsx e css # Sezione per le notizie
+
+|   ├── calendarPage |- file jsx e css # Calendario personalizzato
+
 │-- pages
-|   ├── homePage |- file jsx e css      # Pagina principale
+
+|   ├── homePage |- file jsx e css # Pagina principale
+
 |   ├── savedItemsPage |- file jsx e css # Pagina degli elementi salvati
-|   ├── loginPage |- file jsx e css     # Pagina di login
+
+|   ├── loginPage |- file jsx e css # Pagina di login
+
 │-- services
+
 |   ├── TicketmasterService.js # Chiamate API per eventi
-|   ├── NewsService.js         # Chiamate API per notizie
+
+|   ├── NewsService.js # Chiamate API per notizie
+
 │-- styles
-|   ├── custom.scss    # Stili personalizzati
+
+|   ├── custom.scss # Stili personalizzati
 
 ## 🔄 Workflow
 
