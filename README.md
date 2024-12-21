@@ -1,119 +1,114 @@
-# Getting Started with Create React App
+### 🎨 Event Tracker - Frontend
+## 📋 Descrizione del Progetto
+Event Tracker è un'applicazione che consente agli utenti di visualizzare e salvare eventi e notizie, accedere al proprio calendario personalizzato e gestire i propri elementi salvati.
+Questo progetto utilizza React per la struttura dell'app, Bootstrap per il design responsivo e Sass per uno stile personalizzato.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 🚀 Tecnologie Utilizzate
+React
+React Router (Per la navigazione)
+Bootstrap 5 (Per il layout e lo stile responsivo)
+Sass (Per personalizzazioni avanzate del CSS)
+Axios (Per le chiamate HTTP)
+React-Toastify (Per le notifiche)
 
-## Available Scripts
+## ⚙️ Configurazione del Progetto:
 
-In the project directory, you can run:
+# 1. Requisiti Preliminari
+Node.js installato (versione 16 o successiva)
+npm o yarn installati
 
-### `npm start`
+# 2. Configurazione dell'Applicazione
+Clona il repository:
+git clone https://github.com/your-repository/event-tracker-frontend.git
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Vai nella cartella del progetto:
+cd event-tracker-frontend
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Installa le dipendenze:
+npm install
 
-### `npm test`
+Configura il file .env con l'URL del backend:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Crea un file .env nella root del progetto e aggiungi:
+REACT_APP_API_URL=http://localhost:8080
 
-### `npm run build`
+## 🛠️ Avvio dell'Applicazione
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Avvia il server di sviluppo:
+npm start
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+L'app sarà disponibile su:
+http://localhost:3000
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## 🖼️ Caratteristiche Principali
 
-### `npm run eject`
+# 1. Login e Registrazione
+Gli utenti possono accedere con le proprie credenziali tramite il modulo di login.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+# 2. Home Page
+Visualizza eventi e notizie provenienti da Ticketmaster API e NewsAPI.
+Funzionalità di ricerca per filtrare eventi/notizie per keyword, città, o categoria.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+# 3. Elementi Salvati
+Gli utenti possono salvare eventi e notizie, visualizzarli in una pagina dedicata e rimuoverli se necessario.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+# 4. Calendario Personalizzato
+Gli eventi salvati sono visualizzati in un calendario con indicazioni visive sulle date occupate.
+È possibile aggiungere eventi personali con note direttamente nel calendario.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 📄 Struttura dei Componenti
+src
+│-- components
+|   ├── navbar |- file jsx e css         # Navbar dell'app
+|   ├── footer |- file jsx e css        # Footer
+|   ├── eventCard |- file jsx e css     # Card singola per gli eventi
+|   ├── eventFilterBar |- file jsx e css  # Barra dei filtri per eventi
+|   ├── eventList |- file jsx e css      # Lista degli eventi
+|   ├── newsSection |- file jsx e css   # Sezione per le notizie
+|   ├── calendarPage |- file jsx e css   # Calendario personalizzato
+│-- pages
+|   ├── homePage |- file jsx e css      # Pagina principale
+|   ├── savedItemsPage |- file jsx e css # Pagina degli elementi salvati
+|   ├── loginPage |- file jsx e css     # Pagina di login
+│-- services
+|   ├── TicketmasterService.js # Chiamate API per eventi
+|   ├── NewsService.js         # Chiamate API per notizie
+│-- styles
+|   ├── custom.scss    # Stili personalizzati
 
-## Learn More
+## 🔄 Workflow
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+# 1. Chiamate API
+/events/filter: Recupera eventi con filtri da Ticketmaster.
+/news/external: Recupera notizie filtrate da NewsAPI.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# 2. Stato Locale
+Stato globale gestito tramite useState.
+Funzioni principali come handleSaveItem e handleRemoveItem per gestire gli elementi salvati.
 
-### Code Splitting
+## 🎨 Stile Personalizzato
+Gli stili sono personalizzati con Sass.
+Esempio di palette personalizzata utilizzata:
+$primary: #3D5AFE;
+$success: #81C784;
+$danger: #E57373;
+$warning: #FFF9C4;
+$dark: #212529;
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+$theme-colors: (
+  "primary": $primary,
+  "success": $success,
+  "danger": $danger,
+  "warning": $warning,
+  "dark": $dark,
+);
 
-### Analyzing the Bundle Size
+## 🧪 Test dell'Applicazione
+Puoi testare l'applicazione utilizzando React Testing Library o strumenti manuali come Postman per verificare le risposte del backend.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## 📫 Contatti
+Se hai bisogno di ulteriori informazioni o supporto:
+John Oliveira
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-## Librerie utilizzate
-
-### React-Bootstrap e Bootstrap
-Per una gestione semplice e veloce dell'aspetto della pagina
-- npm i react-bootstrap bootstrap
-
-
-### Axios
-Per effettuare chiamate HTTP al backend
-- npm install axios
-- npm install react-router-dom
-
-### React Icons
-Per aggiungere icone facilmente
-- npm install react-icons
-
-### React Toastify
-Per le notifiche
-- npm install react-toastify
-
-### Redux Toolkit
-Per la gestione dello stato globale
-- npm install @reduxjs/toolkit react-redux
-
-### React Calendar
-Per gestire il calendario personale
-- npm install react-calendar
-
-### React Google Login
-Per permettere il login tramite account google
-- npm install @react-oauth/google
-
-### Yup e Formik
-Per la validazione dei form
-- npm install formik yup
-
-### dotenv
-Per gestire variabili d'ambiente
-- npm install dotenv
-
-### Framer Motion
-Per animazioni
-- npm install framer-motion
-
-### Testing (Jest e React Testing Library)
-Per testare i componenti
-- npm install @testing-library/react @testing-library/jest-dom
-
+Email: john.oliver98.br@gmail.com
+LinkedIn: https://www.linkedin.com/in/john-oliver-2205aa247
